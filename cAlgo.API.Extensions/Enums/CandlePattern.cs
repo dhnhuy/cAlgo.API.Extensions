@@ -2,10 +2,10 @@
 {
     public enum CandlePattern
     {
-        Engulfing,
-        Rejection,
-        Doji,
-        InsideBar,
-        ThreeBarReversal
+        Engulfing = 1,
+        Rejection = 2,
+        Doji = 3,
+        InsideBar = 4,
+        ThreeBarReversal = 5
     }
 }

@@ -35,7 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="cAlgo.API">
-      <HintPath>..\..\..\..\Documents\cAlgo\API\cAlgo.API.dll</HintPath>
+      <HintPath>C:\Users\dhnhuy\AppData\Local\Apps\2.0\KBXBYYV4.JKH\WO8XY4TM.7Y8\icma..ader_45446ba1471a4b7e_0004.0001_e40297aae6cf28d5\cAlgo.API.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

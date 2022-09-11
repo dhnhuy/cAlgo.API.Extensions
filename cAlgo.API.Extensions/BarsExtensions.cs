@@ -248,6 +248,12 @@ namespace cAlgo.API.Extensions
             return barBodyRange > previousBarRange && barType != previousBarType;
         }
 
+        public static bool IsBullishEngulfingBar(this Bars bars, int index) =>
+            bars.IsEngulfingBar(index) && bars.GetBarType(index) == BarType.Bullish;
+
+        public static bool IsBearishEngulfingBar(this Bars bars, int index) =>
+            bars.IsEngulfingBar(index) && bars.GetBarType(index) == BarType.Bearish;
+
         /// <summary>
         /// Returns True if the index bar is a rejection bar
         /// </summary>
@@ -274,10 +280,16 @@ namespace cAlgo.API.Extensions
                 {
                     return true;
                 }
-            }
+            }   
 
             return false;
         }
+
+        public static bool IsRejectionBullishBar(this Bars bars, int index)
+            => bars.IsRejectionBar(index) && bars.GetBarType(index) == BarType.Bullish;
+
+        public static bool IsRejectionBearishBar(this Bars bars, int index)
+            => bars.IsRejectionBar(index) && bars.GetBarType(index) == BarType.Bearish;
 
         /// <summary>
         /// Returns True if the index bar is a doji bar
@@ -316,6 +328,12 @@ namespace cAlgo.API.Extensions
             return false;
         }
 
+        public static bool IsInsideBullishBar(this Bars bars, int index)
+            => bars.IsInsideBar(index) && bars.GetBarType(index) == BarType.Bullish;
+
+        public static bool IsInsideBearishBar(this Bars bars, int index)
+            => bars.IsInsideBar(index) && bars.GetBarType(index) == BarType.Bearish;
+
         /// <summary>
         /// Returns True if the index bar is a three bar reversal
         /// </summary>
@@ -352,6 +370,12 @@ namespace cAlgo.API.Extensions
 
             return result;
         }
+
+        public static bool IsThreeBarReversalBullish(this Bars bars, int index) 
+            => bars.IsThreeBarReversal(index) && bars.GetBarType(index) == BarType.Bullish;
+
+        public static bool IsThreeBarReversalBearish(this Bars bars, int index)
+            => bars.IsThreeBarReversal(index) && bars.GetBarType(index) == BarType.Bearish;
 
         /// <summary>
         /// Returns the candle type of given bar index
@@ -395,6 +419,93 @@ namespace cAlgo.API.Extensions
 
             return patterns;
         }
+
+        /// <summary>
+        /// Returns the bullish candle type of given bar index
+        /// </summary>
+        /// <param name="bars"></param>
+        /// <param name="index">The bar index number in a market series</param>
+        /// <returns>List<CandlePattern></returns>
+        public static List<CandlePattern> GetBullishCandlePatterns(this Bars bars, int index)
+        {
+            var patterns = new List<CandlePattern>();
+
+            // Engulfing
+            if (bars.IsBullishEngulfingBar(index))
+            {
+                patterns.Add(CandlePattern.Engulfing);
+            }
+
+            // Rejection
+            if (bars.IsRejectionBullishBar(index))
+            {
+                patterns.Add(CandlePattern.Rejection);
+            }
+
+            // Doji
+            if (bars.IsDojiBar(index))
+            {
+                patterns.Add(CandlePattern.Doji);
+            }
+
+            // InsideBar
+            if (bars.IsInsideBullishBar(index))
+            {
+                patterns.Add(CandlePattern.InsideBar);
+            }
+
+            // Three Reversal Bars
+            if (bars.IsThreeBarReversalBullish(index))
+            {
+                patterns.Add(CandlePattern.ThreeBarReversal);
+            }
+
+            return patterns;
+        }
+
+        /// <summary>
+        /// Returns the Bearish candle type of given bar index
+        /// </summary>
+        /// <param name="bars"></param>
+        /// <param name="index">The bar index number in a market series</param>
+        /// <returns>List<CandlePattern></returns>
+        public static List<CandlePattern> GetBearishCandlePatterns(this Bars bars, int index)
+        {
+            var patterns = new List<CandlePattern>();
+
+            // Engulfing
+            if (bars.IsBearishEngulfingBar(index))
+            {
+                patterns.Add(CandlePattern.Engulfing);
+            }
+
+            // Rejection
+            if (bars.IsRejectionBearishBar(index))
+            {
+                patterns.Add(CandlePattern.Rejection);
+            }
+
+            // Doji
+            if (bars.IsDojiBar(index))
+            {
+                patterns.Add(CandlePattern.Doji);
+            }
+
+            // InsideBar
+            if (bars.IsInsideBearishBar(index))
+            {
+                patterns.Add(CandlePattern.InsideBar);
+            }
+
+            // Three Reversal Bars
+            if (bars.IsThreeBarReversalBearish(index))
+            {
+                patterns.Add(CandlePattern.ThreeBarReversal);
+            }
+
+            return patterns;
+        }
+
 
         /// <summary>
         /// Returns True if the provided bar matches any of the provided patterns otherwise false
